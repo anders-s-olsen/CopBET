@@ -56,7 +56,7 @@ Replace `'CopBET_FUNCTION'` with the name of the desired entropy metric:
 * CopBET_time_series_complexity
 * CopBET_von_Neumann_entropy
 
-The functions that require voxel-wise input data and a specified atlas are `'CopBET_intranetwork_synchrony'`, `'CopBET_motif_connectivity_entropy'`, and `'CopBET_sample_entropy'`. Please refer to the paper for more details on available metrics and their usage. Note that while some of these functions return scalar entropy values per row in the input table, some return a vector or matrix of entropy values, which need to be further processed afterwards. For example, `CopBET_degree_distribution_entropy` returns an entropy value for each "mean degree". 
+The functions that require voxel-wise input data and a specified atlas are `'CopBET_intranetwork_synchrony'`, `'CopBET_motif_connectivity_entropy'`, and `'CopBET_sample_entropy'`. Please refer to the paper for more details on available metrics and their usage. Note that while some functions return scalar entropy values per row in the input table, some return a vector or matrix of entropy values, which need to be further processed afterwards. For example, `CopBET_degree_distribution_entropy` returns an entropy value for each "mean degree". 
 
 ## Example script
 
