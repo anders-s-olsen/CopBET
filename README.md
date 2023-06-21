@@ -23,7 +23,7 @@ To use the Copenhagen Brain Entropy Toolbox, follow the steps below:
 ## Usage
 
 The toolbox provides a set of MATLAB functions that can be used to evaluate different entropy metrics on brain data. The metrics take either a matrix (time by regions) or a table in which the first column of the table contains matrices of size (time by regions). The output will always be a table with a column with the name "entropy". The functions have an option to keep the input table information in the output, thus adding a new entropy-column to the existing table. 
-Note that two functions need voxel-wise input data and thus, the input data for these should be either a char or a table or chars of the path to the (denoised) 4D-volumes in 2mm MNI-152-space for the corresponding subject. These functions also require an atlas to be specified. Here's an example of how to use the toolbox:
+Note that two functions need voxel-wise input data and thus, the input data for these should be either a char or a table or chars of the path to the (denoised) 4D-volumes for the corresponding subject. These functions also require an atlas (in the same space!) to be specified. Here's an example of how to use the toolbox:
 
 ```matlab
 % Load your brain data (i.e., time series)
@@ -61,6 +61,10 @@ The functions that require voxel-wise input data and a specified atlas are `'Cop
 ## Example script
 
 We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present as a folder in the CopBET folder. 
+
+## Atlases
+
+We provided a folder with all the atlases that we used in our paper to replicate previous studies, in 2mm MNI-152 space. However, for the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. These atlases may be used in conjunction with the LSD dataset. 
 
 ## Contributing
 
