@@ -1,6 +1,6 @@
 % out = CopBET_intranetwork_synchrony(in,atlas,varargin)
 %
-% Copenhagen Brain Entropy Toolbox: Intranetwork synchrony
+% Copenhagen Brain Entropy Toolbox: Intranetwork synchrony.
 % Evaluates intranetwork synchrony as in Carhart-Harris et al., 2014.
 % Denoised voxel-wise timeseries are loaded along with a set of ROIs in a
 % 4D logical matrix. For each volume, for each roi, the mean os all voxels
@@ -14,8 +14,7 @@
 %   a table where the first column contains
 %   chars (in cells), e.g., different subjects or scan sessions.
 %   atlas: The ROIs in a 4D logical matrix. 
-%   
-%   varargin (name-value pairs):
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
@@ -31,6 +30,9 @@
 % ASO 9/3-2023
 
 function out = CopBET_intranetwork_synchrony(in,atlas,varargin)
+if nargin<2
+    error('Please specify a 4D atlas')
+end
 [out,numworkers,in,NRUspecific] = CopBET_function_init(in,varargin);
 
 %load data
@@ -44,12 +46,10 @@ if numel(unique(atlas(:)))~=2
     error('please specify the atlas as a logical matrix')
 end
 
-% parfor (ses = 1:height(in),numworkers)
-for ses = 1:height(in);
+parfor (ses = 1:height(in),numworkers)
     path = in{ses,1}{1};
     
     data_denoised = niftiread(path); %4D series
-%     data_denoised = data_denoised - mean(data_denoised,4);
     
     if NRUspecific
         if ~cellfun(@isempty,regexp(path,'mr001'))
@@ -62,8 +62,6 @@ for ses = 1:height(in);
         error('data and atlas have different sizes')
     end
     
-%     ROImeans = nan(size(atlas,4),datasz(4));
-%     datadistances = cell(1,size(atlas,4));
     variances = nan(size(atlas,4),datasz(4));
     
     for vol = 1:datasz(4)
@@ -71,20 +69,13 @@ for ses = 1:height(in);
         v(v==0) = nan; % extra-ROI voxels would skew the variance
         
         for ROI = 1:size(atlas,4)
-%             ROImeans(ROI,vol) = mean(v(atlas(:,:,:,ROI)),'all');
-%             datadistances{ROI}(:,vol) = abs(v(atlas(:,:,:,ROI))-ROImeans(ROI,vol));
             variances(ROI,vol) = nanvar(v(atlas(:,:,:,ROI)));
         end
-        
         
     end
     
     entropy_ROI = nan(size(atlas,4),1);
-%     Prob = cell(1,size(atlas,4));
     for ROI = 1:size(atlas,4)
-%         [Prob{ROI},bins] = histcounts(datadistances{ROI}(:),bins,'Normalization','probability');
-%         entropy{ses,ROI} = nansum(-Prob{ROI}.*log(Prob{ROI}));
-%         sensible_data_check(entropy{ses,ROI});
         [Prob,bins] = histcounts(variances(ROI,:),'Normalization','probability');
         entropy_ROI(ROI) = nansum(-Prob.*log(Prob));
     end

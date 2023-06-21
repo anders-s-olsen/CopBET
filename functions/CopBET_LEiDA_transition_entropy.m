@@ -13,7 +13,7 @@
 %   matrices (in cells) to be concatenated before clustering, e.g.,
 %   different subjects or scan sessions.
 %   K: number of clusters for k-means clustering. 
-%   varargin:
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true

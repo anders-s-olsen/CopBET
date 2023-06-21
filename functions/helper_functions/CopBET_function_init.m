@@ -4,7 +4,7 @@ parallel = true;
 keepdata = true;
 NRUspecific = false;
 
-namevalue = name_value_pairs(varargin);
+namevalue = name_value_pairs(varargin{1});
 for args = 1:size(namevalue,1)
     if strcmpi(namevalue(args),'keepdata')
         keepdata = namevalue{args,2};
@@ -47,15 +47,15 @@ if keepdata
     end
 end
 
-function db=name_value_pairs(varargin)
-if isempty(varargin)||mod(length(varargin),2)==1
+function db=name_value_pairs(c)
+if isempty(c)||mod(length(c),2)==1
     db={};
     return
 end
 jj=1;
-for ii=1:2:length(varargin)
-     if isa(varargin{ii},'char')
-        db{jj,1}=varargin{ii};db{jj,2}=varargin{ii+1};jj=jj+1;
+for ii=1:2:length(c)
+     if isa(c{ii},'char')
+        db{jj,1}=c{ii};db{jj,2}=c{ii+1};jj=jj+1;
      else         
          db={};
          return

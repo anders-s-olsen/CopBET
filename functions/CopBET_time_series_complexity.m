@@ -1,16 +1,24 @@
 % out = CopBET_time_series_complexity(in,LZtype,keepdata,parallel)
 %
 % Copenhagen Brain Entropy Toolbox: Time series complexity
-% Evaluates XX
+% Evaluates time-series complexity as in Varley et al., 2020. Here, the
+% input data is hilbert-transformed, then the amplitude of the
+% hilbert-transformed time-series is binarised around the mean value. Then,
+% depending on whether spatial or temporal lempel-ziv complexity is to be
+% computed, the matrix is flattened along one or the other direction. It is
+% also possible to use the LZ76 exhaustive algorithm here instead of the
+% LZ78 algorithm, which was used originally. The output is normalized by
+% the LZ score of a randomly permuted version of the input data. 
 %
 % Input:
 %   in: a matrix (nxp,n>1) or a table where the first column contains
 %   matrices (in cells) to be concatenated before clustering, e.g.,
 %   different subjects or scan sessions.
+%   LZtype: one of 'LZ78spatial','LZ78temporal','LZ76spatial','LZ76temporal'
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
-%
 %
 % Neurobiology Research Unit, 2023
 % Please cite McCulloch, Olsen et al., 2023: "Navigating Chaos in
@@ -25,46 +33,8 @@
 % Check for nans
 % visualize proper ordering of matrix transformations
 
-function out = CopBET_time_series_complexity(in,LZtype,keepdata,parallel)
-if nargin<2
-    LZtype = 'LZ78spatial';
-    keepdata = true;
-    parallel = true;
-elseif nargin<3
-    keepdata = true;
-    parallel = true;
-elseif nargin <4
-    parallel = true;
-elseif nargin<1
-   error('Please specify input data')
-end
-if keepdata
-    if any(strcmp(in.Properties.VariableNames,'entropy'))
-        warning('Overwriting entropy column in datatbl')
-    end
-end
-
-if ~any(strcmp(LZtype,{'LZ78spatial','LZ78temporal','LZ76spatial','LZ76temporal'}))
-    error(['Please specify LZtype as one of the following: ','LZ78spatial, ','LZ78temporal, ','LZ76spatial, ','LZ76temporal'])
-end
-if ~istable(in)
-    if ismatrix(in)
-        % convert matrix to table with one entry
-        tbl = table;
-        tbl.in{1} = in;
-        in = tbl;
-    else
-        error(['Please specify the input data as either a matrix (nxp, n>1)', ...
-            'or a table of matrices tbl where the FIRST column contains the data',...
-            'with a matrix for each row'])
-    end
-end
-
-if parallel
-    numworkers = 10;
-else
-    numworkers = 0;
-end
+function out = CopBET_time_series_complexity(in,LZtype,varargin)
+[out,~,in] = CopBET_function_init(in,varargin);
 
 %load data
 entropy = nan(height(in),1);
@@ -121,24 +91,11 @@ for ses = 1:height(in)
         [C_rand, H_rand] = calc_lz_complexity(long_rand, 'exhaustive', 1);
     end
     
-%     for roi = 1:size(ts,2)
-%         C(roi) = cpr(char(bin_abs_hts(:,roi)+'0'));
-%         C_rand(roi) = cpr(char(M_rand(:,roi)+'0'));
-%     end
-    
-
-    
     entropy(ses) = mean(C./C_rand);
     
     disp(['Done with session ',num2str(ses),' of ',num2str(height(in))])
 end
-if keepdata
-    out = in;
-    out.entropy = entropy;
-else
-    out = table;
-    out.entropy = entropy;
-end
+out.entropy = entropy;
 end
 %%
 function out = cpr(str)

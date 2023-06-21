@@ -1,15 +1,19 @@
 % out = CopBET_metastate_series_complexity(in,keepdata,parallel)
 %
-% Copenhagen Brain Entropy Toolbox: Metastate series complexity
-% Evaluates Lempel-Ziv complexity (the LZ76 algorithm) for a binary series
-% re
+% Copenhagen Brain Entropy Toolbox: Metastate series complexity.
+% Evaluates Lempel-Ziv complexity (the LZ76 exhaustive algorithm) for a 
+% binary series of metastates. The metastates are created by running
+% K-means with K=4 states on the fMRI data using the correlation distance
+% measure. Subsequently, since the four state centroids are typically
+% diametrical opposites of one of the others, the four states are grouped
+% to two 'metastates'. The activation sequence of these metastates then
+% forms the input to the LZ76 algorithm.
 %
 % Input:
 %   in: a matrix (nxp,n>1) or a table where the first column contains
 %   matrices (in cells) to be concatenated before clustering, e.g.,
 %   different subjects or scan sessions.
-%   TR: TR for applying a narrow filter between 0.04 and 0.07 Hz
-%   K: number of clusters for k-means clustering. Defaults to K=3
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
@@ -29,34 +33,9 @@
 % Check that cluster centroids make sense (qualitatively) and correct size
 % Check nans/infs
 
-function out = CopBET_metastate_series_complexity(in,keepdata,parallel)
+function out = CopBET_metastate_series_complexity(in,varargin)
 
-if nargin<2
-    keepdata = true;
-    parallel = true;
-elseif nargin < 3
-    parallel = true;
-elseif nargin<1
-    error('Please specify input data')
-end
-if keepdata
-    if any(strcmp(in.Properties.VariableNames,'entropy'))
-        warning('Overwriting entropy column in datatbl')
-    end
-end
-
-if ~istable(in)
-    if ismatrix(in)
-        % convert matrix to table with one entry
-        tbl = table;
-        tbl.in{1} = in;
-        in = tbl;
-    else
-        error(['Please specify the input data as either a matrix (nxp, n>1)', ...
-            'or a table of matrices tbl where the FIRST column contains the data',...
-            'with a matrix for each row'])
-    end
-end
+[out,numworkers,in] = CopBET_function_init(in,varargin);
 
 % Do LEiDA and concatenate data for clustering
 disp('Concatenating data')
@@ -74,31 +53,27 @@ for ses = 1:height(in)
 end
 
 if any(isnan(data_all(:)))
-    error('nan')
+    error('Error, not all atlas regions present in the data or some input data are nan')
 end
 
 disp('running kmeans and LZ calculations')
-entropy = run_singleton_clustering(datasizes,data_all,parallel);
+entropy = run_singleton_clustering(datasizes,data_all,numworkers);
 
-if keepdata
-    out = in;
-    out.entropy = entropy;
-else
-    out = table;
-    out.entropy = entropy;
-end
+
+out.entropy = entropy;
+
 
 
 end
 
 %% functions
-function entropy = run_singleton_clustering(datasizes,ts_all,parallel)
+function entropy = run_singleton_clustering(datasizes,ts_all,numworkers)
 nreps = 200; % how many times to repeat clustering. will choose lowest error solution
 distanceMethod = 'correlation';
 maxI = 1000; % how many times you allow kmeans to try to converge
 
 numClusters = 4;
-if parallel
+if numworkers>0
 [partition,centroids] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
     'Display','final','Options',statset('UseParallel',1));
 else

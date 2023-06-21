@@ -5,13 +5,17 @@
 % for each session. This produces a matrix of correlation coeficients for
 % each volume. Then, for each roi-roi pair, the probability distribution 
 % over the correlation coefficients across volumes is established, from 
-% which the Shannon entropy is evaluated.
+% which the Shannon entropy is evaluated. As a warning, this function takes
+% several days to run, which is the reason it also has an option to
+% actually do the computation or to read them from a path
 %
 % Input:
 %   in: a matrix (nxp,n>1) or a table where the first column contains
 %   matrices (in cells)g, e.g., different subjects or scan sessions.
+%   compute: If not interested in running the very long computations, a
+%   path can be specified to the location of saved DCC matrices
 %   
-%   varargin (name-value pairs):
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
@@ -27,7 +31,11 @@
 
 % ASO March-April 2023
 %%
-function out = CopBET_DCC_entropy(in,varargin,doitornot)
+function out = CopBET_DCC_entropy(in,compute,varargin)
+
+if nargin<2
+    error('Please specify whether to actually run these computations')
+end
 
 [out,numworkers,in] = CopBET_function_init(in,varargin);
 
@@ -37,8 +45,8 @@ parfor(ses = 1:height(in),numworkers)
     
     disp(['Working on DCC entropy calculations for session: ',num2str(ses)])
     ts = in{ses,1}{1};
-    if ~doitornot
-        Ct2 = load(['/mrdata/np2/p3/entropy/critical_files/DCC_output4/DCC',...
+    if compute~=true
+        Ct2 = load([compute,'/DCC',...
         num2str(in.sesidx(ses)),'.mat']);
         Ct2 = Ct2.data;
     else

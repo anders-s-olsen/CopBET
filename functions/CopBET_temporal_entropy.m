@@ -1,6 +1,6 @@
 % out = CopBET_temporal_entropy(in,TR,keepdata,parallel)
 %
-% Copenhagen Brain Entropy Toolbox: Temporal entropy
+% Copenhagen Brain Entropy Toolbox: Temporal entropy.
 % Evaluates temporal entropy as in Luppi et al., 2021. Sliding window
 % connectivity matrices are constructed, The Louvain community detection
 % algorithm is run for each matrix, and the module degree z-score and
@@ -9,13 +9,14 @@
 % profile. This presumably generates an integrative and segregated state,
 % of which the entropy of the activity profile is evalated. All the above
 % is performed for each subject, including a k-means with 500 replications,
-% so this code takes forver to run. 
+% so this code takes forever to run. 
 %
 % Input:
 %   in: a matrix (nxp,n>1) or a table where the first column contains
 %   matrices (in cells) to be concatenated before clustering, e.g.,
 %   different subjects or scan sessions.
 %   TR: TR for constructing tapered windows
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
@@ -37,53 +38,24 @@
 % Check that the k-means output looks sensible
 % check for within-reasonable-range entropy values
 
-function out = CopBET_temporal_entropy(in,TR,keepdata,parallel)
+function out = CopBET_temporal_entropy(in,TR,varargin)
 
-if nargin<3
-    keepdata = true;
-    parallel = true;
-elseif nargin < 4
-    parallel = true;
-elseif nargin<2
-    error('Please specify both input data and a TR')
-end
-if keepdata
-    if any(strcmp(in.Properties.VariableNames,'entropy'))
-        warning('Overwriting entropy column in datatbl')
-    end
+if nargin<2
+    error('Please specify the TR')
 end
 
-if ~istable(in)
-    if ismatrix(in)
-        % convert matrix to table with one entry
-        tbl = table;
-        tbl.in{1} = in;
-        in = tbl;
-    else
-        error(['Please specify the input data as either a matrix (nxp, n>1)', ...
-            'or a table of matrices tbl where the FIRST column contains the data',...
-            'with a matrix for each row'])
-    end
-end
+[out,numworkers,in] = CopBET_function_init(in,varargin);
 
 window = construct_tapered_window(TR);
-
-%load data
 
 for ses = 1:height(in)
     disp(['Working on entropy calculations for session: ',num2str(ses)])
     tmp = in{ses,1}{1};
     tmp = tmp - mean(tmp);
-    entropy(ses) = Luppi21_entropy(tmp,window,parallel);
+    entropy(ses) = Luppi21_entropy(tmp,window,numworkers);
     
 end
-if keepdata
-    out = in;
-    out.entropy = entropy';
-else
-    out = table;
-    out.entropy = entropy';
-end
+out.entropy = entropy';
 end
 %% functions
 
@@ -103,7 +75,7 @@ window = window/sum(window); %make elements sum to 1
 
 end
 
-function entropy = Luppi21_entropy(data,window,parallel)
+function entropy = Luppi21_entropy(data,window,numworkers)
 % Much of the code below was given to us by Andrea Luppi
 
 
@@ -121,11 +93,6 @@ q = nan(numel(window_midpoints),1);
 WT = nan(nNodes,numel(window_midpoints));
 BT = nan(nNodes,numel(window_midpoints));
 
-if parallel
-    numworkers = 10;
-else
-    numworkers = 0;
-end
 
 % Loop through all windows (sliding across the data)
 parfor (i = 1:numel(window_midpoints),numworkers)
@@ -187,7 +154,7 @@ for t = 1:numel(window_midpoints)
   CP(:,:,t) = accumarray([Yi(:) Xi(:)], 1, [yNumBins xNumBins]);
 end
 
-if parallel
+if numworkers>0
     idx=kmeans(reshape(CP,xNumBins * yNumBins,numel(window_midpoints))',2,'Distance','correlation',...
     'Replicates',500,'Display','off','Options',statset('UseParallel',1));
 else

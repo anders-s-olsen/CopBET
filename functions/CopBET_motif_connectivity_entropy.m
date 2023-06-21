@@ -1,21 +1,24 @@
-% out = CopBET_degree_distribution_entropy(in,keepdata,parallel)
+% out = CopBET_motif_connectivity_entropy(in,keepdata,parallel)
 %
-% Copenhagen Brain Entropy Toolbox: Temporal entropy
-% Evaluates temporal entropy as in Luppi et al., 2021. Sliding window
-% connectivity matrices are constructed, The Louvain community detection
-% algorithm is run for each matrix, and the module degree z-score and
-% participation coefficient is evaluated. Based on these (concatenated
-% across all windows), a K=2 kmeans algorithm is run on the cartographic
-% profile. This presumably generates an integrative and segregated state,
-% of which the entropy of the activity profile is evalated. All the above
-% is performed for each subject, including a k-means with 500 replications,
-% so this code takes forver to run.
+% Copenhagen Brain Entropy Toolbox: Motif-connectivity entropy
+% Evaluates motif-connectivity entropy as in Tagliazucchi et al., 2014. 
+% Sliding windows of different window lengths are slid across the data, and
+% in each window, the mean standardized mean time-series for each ROI and
+% inputted motion correction time series converted to a frame-wise
+% displacement series are used to calculate the partial correlation
+% coefficient matrix. This matrix is binarized according to the
+% corresponding p-values. For each window, it is then noted which of 64
+% possible configurations matches the 4-ROI connectivity. Finally, the
+% entropy of the distribution of 4-ROI connectivity is calculated for each
+% scan session.
 %
 % Input:
 %   in: a matrix (nxp,n>1) or a table where the first column contains
-%   matrices (in cells) to be concatenated before clustering, e.g.,
-%   different subjects or scan sessions.
-%   TR: TR for constructing tapered windows
+%   paths (in cells) to denoised voxel-wise 4-D volumes and the second
+%   column contains matrices with the motion correction time series. 
+%   atlas: Atlas fo the four regions to be examined
+%   TR: TR to ensure window sizes are properly constructed
+% name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
@@ -34,48 +37,8 @@
 % potential tests:
 % Viol mentioned some tests in her email
 
-function out = CopBET_motif_connectivity_entropy(in,rp,atlas,TR,keepdata,parallel,NRUspecific)
-
-if nargin<3
-    keepdata = true;
-    parallel = true;
-    NRUspecific = false;
-elseif nargin < 4
-    parallel = true;
-    NRUspecific = false;
-elseif nargin<5
-    NRUspecific = false;
-elseif nargin<2
-    error('Please specify both input data and an atlas (3D)')
-end
-if keepdata
-    if any(strcmp(in.Properties.VariableNames,'entropy'))
-        warning('Overwriting entropy column in datatbl')
-    end
-end
-
-if ~istable(in)
-    if isstr(in)
-        % convert matrix to table with one entry
-        tbl = table;
-        tbl.in{1} = in;
-        if isempty(rp)
-            error('need to specify motion correction time series as well')
-        end
-        tbl.rp{1} = rp;
-        in = tbl;
-    else
-        error(['Please specify the input data as either a matrix (nxp, n>1)', ...
-            'or a table of matrices tbl where the FIRST column contains the data',...
-            'with a matrix for each row'])
-    end
-end
-
-if parallel
-    numworkers = 10;
-else
-    numworkers = 0;
-end
+function out = CopBET_motif_connectivity_entropy(in,atlas,TR,varargin)
+[out,numworkers,in] = CopBET_function_init(in,varargin);
 
 window_lengths = 15:1:150; %seconds
 
@@ -94,13 +57,7 @@ parfor(ses = 1:height(in),numworkers)
     entropy{ses} = calc_shannon_ent(state_hist1);
     
 end
-if keepdata
-    out = in;
-    out.entropy = entropy';
-else
-    out = table;
-    out.entropy = entropy';
-end
+out.entropy = entropy';
 end
 
 %% functions

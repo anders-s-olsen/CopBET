@@ -1,13 +1,13 @@
 %%
-function [tbl,data,opts] = CopBET_CarhartHarris_2020_data(atlas,ts_ROI2ROI)
+function [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,ts_ROI2ROI)
 
 if nargin==0||isempty(atlas)
 %     error('An atlas needs to be specified')
     atlas = 'yeo7';
 else
     %%%%%%%%%%%%%% function-wide settings and import stuff
-    possible_atlases = {'aal90','Craddock181','HarvardOxford105',...
-        'Lausanne462','Schaefer1000','Shen218','yeo17','smith20','SchaeferTian232'};
+    possible_atlases = {'AAL90','Craddock200','HarvardOxford105',...
+        'Lausanne463','Schaefer1000','Shen268','yeo17','smith20','SchaeferTian232'};
     
     if all(~strcmpi(atlas,possible_atlases))
         disp(possible_atlases)
@@ -17,8 +17,11 @@ else
     
 end
 
-subs = dir(['/indirect/mrdata/np2/p3/entropy/LSDdata/sub-*']);
-nummats = numel(dir(['/indirect/mrdata/np2/p3/entropy/LSDdata/ROIdata/aal90/*.mat']));
+subs = dir([pwd,'/LSDdata/sub-*']);
+if isempty(subs)
+    error('Please make sure you''re standing in the right directory')
+end
+nummats = numel(dir([pwd,'/LSDdata/ROIdata/AAL90/*.mat']));
 conditions = {'ses-PLCB','ses-LSD'};
 
 opts.subjects = {subs(:).name};
@@ -40,7 +43,7 @@ for sub = 1:numel(opts.subjects) %loop through subjects
                 conditions{cond},'/func/',subs(sub).name,'_',conditions{cond},...
                 '_task-rest_run-0',num2str(ses),'_bold.nii.gz'];
             else
-            load(['/mrdata/np2/p3/entropy/LSDdata/ROIdata/',...
+            load([pwd,'/LSDdata/ROIdata/',...
                 atlas,'/',subs(sub).name,'_',conditions{cond},...
                 '_task-rest_run-0',num2str(ses),'_bold']);
             tbl.data{tblcount} = V_roi;

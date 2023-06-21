@@ -55,9 +55,6 @@ end
 
 %% functions
 
-% test graph
-% adj_mat = [0,1,1,0,1,1,1,0,0;1,0,1,1,0,0,0,0,0;1,1,0,0,1,0,0,0,0;0,1,0,0,0,0,0,0,0;1,0,1,0,0,0,0,0,0;1,0,0,0,0,0,1,0,0;1,0,0,0,0,1,0,1,1;0,0,0,0,0,0,1,0,1;0,0,0,0,0,0,1,1,0]
-
 function entropy = calc_viol19_entropy(Z,opts)
 bin_matrix=cell(1,length(opts.thresholds));
 degree = zeros(length(bin_matrix),1);

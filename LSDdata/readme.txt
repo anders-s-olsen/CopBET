@@ -1,0 +1,1 @@
+Please download the LSD dataset into this folder, such that this folder contains 'sub-001' etc. 
