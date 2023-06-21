@@ -60,24 +60,18 @@ The functions that require voxel-wise input data and a specified atlas are `'Cop
 
 ## Example script
 
-We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present as a folder in the CopBET folder. 
+We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present as a folder in the CopBET/LSDdata folder. Please following the dedicated script `CopBET/LSDdata/LSDdata_roi.m` to extract ROI-information for each of the atlases in the `CopBET_Atlases` folder
 
 ## Atlases
 
-We provided a folder with all the atlases that we used in our paper to replicate previous studies, in 2mm MNI-152 space. However, for the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. These atlases may be used in conjunction with the LSD dataset. 
+We provided a folder with all the atlases that we used in our paper to replicate previous studies, in 2mm MNI-152 space. However, for the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. These atlases may be used in conjunction with the LSD dataset. Neither the cerebellum-removed atlases nor any of our own data are available in this repository.
 
 ## Contributing
 
 Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to the toolbox or otherwise have comments and questions to the code not answered in the paper. 
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ## References
 
 If you use the Copenhagen Brain Entropy Toolbox in your research, please cite the following paper:
 
 Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". *XX*, 2023.
-
-Please replace "YYYY" with the publication year of the paper.
