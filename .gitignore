@@ -10,3 +10,4 @@ CopBET_main.m
 CopBET_McCulloch_Olsen_2023_data.m
 NRUspecific_downsamplemr001data.m
 quickplot.m
+.gitignore~
