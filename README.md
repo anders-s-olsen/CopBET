@@ -68,6 +68,10 @@ We have posted a script `CopBET_main_CH2016data` showing examples of how to use 
 
 We have provided a folder with all the atlases that we used in our paper to replicate previous studies in 2mm MNI-152 space. These atlases may be used in conjunction with the LSD dataset. For the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. Neither the cerebellum-removed atlases nor any of our own data are available in this repository.
 
+## Statistics
+
+In the statistics folder, an R-function `permlme.R` is included which contains the permutation testing function used in the statistics section of our paper. 
+
 ## Contributing
 
 Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to the toolbox or otherwise have comments and questions to the code not answered in the paper. 
