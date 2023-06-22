@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-The Copenhagen Brain Entropy Toolbox is a MATLAB toolbox that provides a collection of functions for evaluating 12 different entropy metrics described in the paper "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy" by Drummond McCulloch, Anders S Olsen et al. This toolbox allows researchers to analyze and quantify the entropy of fMRI-recorded brain activity using various methods.
+The Copenhagen Brain Entropy Toolbox is a MATLAB toolbox that provides a collection of functions for evaluating 12 different entropy metrics described in the paper "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy" by Drummond McCulloch, Anders S Olsen et al (in prep). This toolbox allows researchers to analyze and quantify the entropy of fMRI-recorded brain activity using various methods.
 
 ## Installation
 
@@ -80,7 +80,7 @@ Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to t
 
 If you use the Copenhagen Brain Entropy Toolbox in your research, please cite the following paper:
 
-Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". *XX*, 2023.
+Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". (in prep), 2023.
 
 ## Version
 
