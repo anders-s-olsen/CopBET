@@ -58,13 +58,15 @@ Replace `'CopBET_FUNCTION'` with the name of the desired entropy metric:
 
 The functions that require voxel-wise input data and a specified atlas are `'CopBET_intranetwork_synchrony'`, `'CopBET_motif_connectivity_entropy'`, and `'CopBET_sample_entropy'`. Please refer to the paper for more details on available metrics and their usage. Note that while some functions return scalar entropy values per row in the input table, some return a vector or matrix of entropy values, which may need to be further processed afterwards for e.g., plotting. For example, `CopBET_degree_distribution_entropy` returns an entropy value for each "mean degree". 
 
+Please note that the MATLAB-functions in this toolbox have been implemented to mimic the behavior of the methods presented by the papers from where they were introduced. Thus, some functions may include some odd modeling decisions, and only a few function-specific input parameters have been implemented. For example, in `CopBET_degree_distribution_entropy`, a static connectivity matrix is established and non-significant correlation coefficients set to zero, while in `CopBET_geodesic_entropy`, which also establishes a static connectivity matrix, no extra thresholding is applied. We hope to be able to implement further modeling decisions as inputs to the functions in the future. For now, we advise users who wish to employ these functions to look through them carefully, perhaps extracting/altering some pieces of the code. 
+
 ## Example script
 
-We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present as a folder in the CopBET/LSDdata folder. Please following the dedicated script `CopBET/LSDdata/LSDdata_roi.m` to extract ROI-information for each of the atlases in the `CopBET_Atlases` folder
+We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present in the CopBET/LSDdata folder. Please follow the dedicated script `CopBET/LSDdata/LSDdata_roi.m` to extract ROI-information for each of the atlases in the `CopBET_Atlases` folder
 
 ## Atlases
 
-We provided a folder with all the atlases that we used in our paper to replicate previous studies, in 2mm MNI-152 space. However, for the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. These atlases may be used in conjunction with the LSD dataset. Neither the cerebellum-removed atlases nor any of our own data are available in this repository.
+We have provided a folder with all the atlases that we used in our paper to replicate previous studies in 2mm MNI-152 space. These atlases may be used in conjunction with the LSD dataset. For the analyses in our paper we stripped away cerebellar ROIs due to inconsistent inclusion in the field of view. Neither the cerebellum-removed atlases nor any of our own data are available in this repository.
 
 ## Contributing
 
@@ -75,3 +77,7 @@ Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to t
 If you use the Copenhagen Brain Entropy Toolbox in your research, please cite the following paper:
 
 Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". *XX*, 2023.
+
+## Version
+
+1.0.0 June 21st 2023 - Initial commit
