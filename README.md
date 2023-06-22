@@ -11,13 +11,13 @@ To use the Copenhagen Brain Entropy Toolbox, follow the steps below:
 1. Clone this repository to your local machine:
 
    ```shell
-   git clone https://github.com/your-username/copenhagen-brain-entropy-toolbox.git
+   git clone https://github.com/anders-s-olsen/CopBET.git
    ```
 
 2. Add the toolbox directory to your MATLAB path using the `addpath` function:
 
    ```matlab
-   addpath(genpath('/path/to/copenhagen-brain-entropy-toolbox');)
+   addpath(genpath('/path/to/CopBET');)
    ```
 
 ## Usage
