@@ -23,7 +23,7 @@ To use the Copenhagen Brain Entropy Toolbox, follow the steps below:
 ## Usage
 
 The toolbox provides a set of MATLAB functions that can be used to evaluate different entropy metrics on brain data. The functions take either a matrix (time by regions) or a table in which the first column of the table contains matrices of size (time by regions) as input. The output will always be a table with a column with the name "entropy". The functions have an option to keep the input table information in the output, thus adding a new entropy-column to the existing table. 
-Note that two functions need voxel-wise input data and thus, the input data for these should be either a char or a table or chars of the path to the (denoised) 4D-volumes for the corresponding subject. These functions also require an atlas (in the same space!) to be specified. Here's an example of how to use the toolbox:
+Note that three functions need voxel-wise input data and thus, the input data for these should be either a char or a table or chars of the path to the (denoised) 4D-volumes for the corresponding subject. These functions also require an atlas (in the same space!) to be specified. Here's an example of how to use the toolbox:
 
 ```matlab
 % Load your brain data (i.e., time series)
