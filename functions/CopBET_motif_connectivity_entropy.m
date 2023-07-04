@@ -34,9 +34,6 @@
 
 % ASO 9/3-2023
 
-% potential tests:
-% Viol mentioned some tests in her email
-
 function out = CopBET_motif_connectivity_entropy(in,atlas,TR,varargin)
 [out,numworkers,in] = CopBET_function_init(in,varargin);
 

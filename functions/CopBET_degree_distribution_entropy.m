@@ -29,9 +29,6 @@
 
 % ASO March-April 2023
 
-% potential tests:
-% Viol mentioned some tests in her email
-
 function out = CopBET_degree_distribution_entropy(in,varargin)
 
 [out,numworkers,in] = CopBET_function_init(in,varargin);

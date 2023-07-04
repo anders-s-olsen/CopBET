@@ -24,9 +24,6 @@
 
 % ASO 9/3-2023
 
-% potential tests:
-% Viol mentioned some tests in her email
-
 function out = CopBET_sample_entropy(in,atlas,compute,varargin)
 
 if nargin<3
