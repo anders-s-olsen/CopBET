@@ -35,7 +35,7 @@
 % ASO 9/3-2023
 
 function out = CopBET_motif_connectivity_entropy(in,atlas,TR,varargin)
-[out,numworkers,in] = CopBET_function_init(in,varargin);
+[out,numworkers,in,NRUspecific] = CopBET_function_init(in,varargin);
 
 window_lengths = 15:1:150; %seconds
 
