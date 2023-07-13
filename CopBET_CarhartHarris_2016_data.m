@@ -1,5 +1,12 @@
 %%
-function [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,ts_ROI2ROI)
+function [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,ts_ROI2ROI,type)
+if type=='example'
+    topfolder = [pwd,'/LSDdata/exampledata/'];
+elseif type == 'full'
+    topfolder = [pwd,'/LSDdata/'];
+else
+    error('Please specify whether to load the full dataset (''full'') (needs to be downloaded from OpenNeuro and processed using the function LSDdata/LSDdata_ROI.m first) or ''example'' with the first placebo and first LSD scan from subject 1')
+end
 
 if nargin==0||isempty(atlas)
 %     error('An atlas needs to be specified')
@@ -12,16 +19,14 @@ else
     if all(~strcmpi(atlas,possible_atlases))
         disp(possible_atlases)
         error('Please input a different atlas name. Possible options above')
-        
     end
-    
 end
 
-subs = dir([pwd,'/LSDdata/sub-*']);
+subs = dir([topfolder,'sub-*']);
 if isempty(subs)
     error('Please make sure you''re standing in the right directory')
 end
-nummats = numel(dir([pwd,'/LSDdata/ROIdata/AAL90/*.mat']));
+nummats = numel(dir([topfolder,'ROIdata/AAL90/*.mat']));
 conditions = {'ses-PLCB','ses-LSD'};
 
 opts.subjects = {subs(:).name};
@@ -43,7 +48,7 @@ for sub = 1:numel(opts.subjects) %loop through subjects
                 conditions{cond},'/func/',subs(sub).name,'_',conditions{cond},...
                 '_task-rest_run-0',num2str(ses),'_bold.nii.gz'];
             else
-            load([pwd,'/LSDdata/ROIdata/',...
+            load([topfolder,'ROIdata/',...
                 atlas,'/',subs(sub).name,'_',conditions{cond},...
                 '_task-rest_run-0',num2str(ses),'_bold']);
             tbl.data{tblcount} = V_roi;
