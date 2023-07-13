@@ -72,9 +72,9 @@ We have provided a folder with all the atlases that we used in our paper to repl
 
 In the statistics folder, an R-function `permlme.R` is included which contains the permutation testing function used in the statistics section of our paper. 
 
-## MATLAB versions
+## MATLAB versions and dependencies
 
-The toolbox has only been tested on MATLAB R2018b.
+The toolbox has only been tested on MATLAB R2018b. The toolbox include the external dependencies Brain Connectivity toolbox (2019_03_03), the complexity toolbox (LOFT) and the DCC toolbox (the original one from 2014)
 
 ## Contributing
 
@@ -86,6 +86,6 @@ If you use the Copenhagen Brain Entropy Toolbox in your research, please cite th
 
 Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". (MedRxiv), 2023.
 
-## Version
+## Repo Version
 
 1.0.0 June 21st 2023 - Initial commit
