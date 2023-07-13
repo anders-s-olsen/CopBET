@@ -28,8 +28,9 @@
 % (i.e., so that the folders sub-* are subfolders to CopBET/LSDdata). Then,
 % please run the script LSDdata/LSDdata_ROI to extract the relevant
 % atlases. Finally, the data-load-function
-% CopBET_CarhartHarris_2016_example_data may be replaced with 
-% CopBET_CarhartHarris_2016_data. 
+% CopBET_CarhartHarris_2016_data may take 'full' as input instead of
+% 'example'. The example data set has been shortened to meet github
+% requirements for file size. 
 %
 % Please run the script from the top CopBET directory for the
 % 'CopBET_CarhartHarris_2016_data' function to work properly
@@ -214,7 +215,7 @@ end
 
 % plot entropy for an example ROI
 ROI_to_plot = 111;
-plot_boxplots_CH2016(entropy(:,ROI_to_plot),tbl,['Diversity Coefficient, ROI: ',num2str(ROI)])
+plot_boxplots_CH2016(entropy(:,ROI_to_plot),tbl,['Diversity Coefficient, ROI: ',num2str(ROI_to_plot)])
 
 %% Sample entropy (several hours pr scan)
 clearvars entropy
