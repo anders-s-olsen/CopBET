@@ -237,9 +237,11 @@ for scale = 1:5
     end
     for ROI = 1:17
         CopBETtbl.(['Sample_entropy_scale',num2str(scale),'_ROI',num2str(ROI)]) = entropy(:,scale,ROI);
-        plot_boxplots_CH2016(entropy(:,scale,ROI),tbl,['Sample entropy, scale: ',num2str(scale),', ROI: ',num2str(ROI)])
     end
 end
+scale_to_plot = 2;
+ROI_to_plot = 7;
+plot_boxplots_CH2016(entropy(:,scale_to_plot,ROI_to_plot),tbl,['Sample entropy, scale: ',num2str(scale_to_plot),', ROI: ',num2str(ROI_to_plot)])
 
 %% Motif connectivity entropy (<1 minute on example data)
 clearvars entropy
@@ -274,7 +276,7 @@ for wl = 1:136
 end
 
 % plot entropy for an example window length
-wl_to_plot = 36;
+wl_to_plot = 4;
 plot_boxplots_CH2016(entropy(:,wl_to_plot),tbl,['Motif connectivity entropy, window size: ',num2str(wl_to_plot)])
 
 %% Varley script, temporal LZ78 (<5 minutes on example data)
