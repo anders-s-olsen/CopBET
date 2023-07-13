@@ -50,7 +50,7 @@
 %    along with this program.  If not, see http://www.gnu.org/licenses/.
 
 clear
-addpath(genpath('/mrdata/np2/p3/entropy/CopBET'))
+addpath(genpath(pwd))
 
 [CopBETtbl,~,~] = CopBET_CarhartHarris_2016_data([],'ts','example');
 %% LEiDA transition entropy (<1 minute on example data)
