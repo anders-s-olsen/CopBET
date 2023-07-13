@@ -90,7 +90,7 @@ Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic 
 
 ## License
 
-Copyright (C) <2023>  <McCulloch DE-W, Olsen AS>
+Copyright (C) 2023  Drummond E-Wen McCulloch & Anders Stevnhoved Olsen
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
