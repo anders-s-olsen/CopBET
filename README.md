@@ -72,7 +72,7 @@ In the statistics folder, an R-function `permlme.R` is included which contains t
 
 ## MATLAB versions and dependencies
 
-The toolbox has only been tested on MATLAB R2018b. The toolbox include the external dependencies Brain Connectivity toolbox (2019_03_03), the complexity toolbox (LOFT) and the DCC toolbox (the original one from 2014)
+The toolbox has been tested on MATLAB R2018b. It doesn't work on R2017b due to the way matlab tables are used. The toolbox include the external dependencies Brain Connectivity toolbox (2019_03_03), the complexity toolbox (LOFT) and the DCC toolbox (the original one from 2014)
 
 ## Contributing
 
