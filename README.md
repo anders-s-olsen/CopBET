@@ -72,6 +72,10 @@ We have provided a folder with all the atlases that we used in our paper to repl
 
 In the statistics folder, an R-function `permlme.R` is included which contains the permutation testing function used in the statistics section of our paper. 
 
+## MATLAB versions
+
+The toolbox has only been tested on MATLAB R2018b.
+
 ## Contributing
 
 Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to the toolbox or otherwise have comments and questions to the code not answered in the paper. 
