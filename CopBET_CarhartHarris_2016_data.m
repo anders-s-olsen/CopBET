@@ -29,7 +29,7 @@ if nargin==0||isempty(atlas)
     atlas = 'yeo7';
 else
     %%%%%%%%%%%%%% function-wide settings and import stuff
-    possible_atlases = {'AAL90','Craddock200','HarvardOxford105',...
+    possible_atlases = {'AAL90','Craddock200','HarvardOxford_cort_subcort',...
         'Lausanne463','Schaefer1000','Shen268','yeo17','smith20','SchaeferTian232'};
     
     if all(~strcmpi(atlas,possible_atlases))

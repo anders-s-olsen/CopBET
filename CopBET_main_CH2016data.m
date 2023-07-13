@@ -90,7 +90,7 @@ plot_boxplots_CH2016(tbl.entropy,tbl,'Metastate series complexity')
 CopBETtbl.metastate_series_complexity = tbl.entropy;
 
 %% von Neumann entropy (instant)
-atlas = 'HarvardOxford105';
+atlas = 'HarvardOxford_cort_subcort';
 [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,'ts','example');
 
 tbl = CopBET_von_Neumann_entropy(tbl,'keepdata',true);
@@ -158,7 +158,7 @@ end
 
 %% Degree distribution entropy (instant)
 clearvars entropy
-atlas = 'HarvardOxford105';
+atlas = 'HarvardOxford_cort_subcort';
 [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,'ts','example');
 
 tbl = CopBET_degree_distribution_entropy(tbl,'keepdata',true,'parallel',true);
@@ -178,7 +178,7 @@ plot_boxplots_CH2016(entropy(:,degree_to_plot),tbl,['Degree distribution entropy
 
 %% Viol 2019 script (instant)
 clearvars entropy
-atlas = 'HarvardOxford105';
+atlas = 'HarvardOxford_cort_subcort';
 [tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,'ts','example');
 
 tbl = CopBET_geodesic_entropy(tbl,'keepdata',true,'parallel',true);
