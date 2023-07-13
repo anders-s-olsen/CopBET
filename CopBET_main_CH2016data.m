@@ -126,9 +126,11 @@ for net = 1:9
 end
 
 %% Dynamic conditional correlation (DCC) entropy (Several hours pr scan)
+% This one doesn't work with the shortened scans. Please download the full
+% dataset. 
 clearvars entropy
 atlas = 'Shen268';
-[tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,'ts','example');
+[tbl,data,opts] = CopBET_CarhartHarris_2016_data(atlas,'ts','full');
 
 % This one takes several days to run. Second argument is whether to actually run the script or to use saved previous outputs 
 tbl = CopBET_DCC_entropy(tbl,true,'keepdata',true,'parallel',true);
