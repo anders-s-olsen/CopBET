@@ -60,7 +60,7 @@ Please note that the MATLAB-functions in this toolbox have been implemented to m
 
 ## Example script
 
-We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. In the script, the dataset is assumed to be present in the CopBET/LSDdata folder. Please follow the dedicated script `CopBET/LSDdata/LSDdata_roi.m` to extract ROI-information for each of the atlases in the `CopBET_Atlases` folder
+We have posted a script `CopBET_main_CH2016data` showing examples of how to use the functions with the openly available acute IV LSD dataset https://openneuro.org/datasets/ds003059. The script can either be used with the example data in this repostitory, or with the full LSD dataset, which would then be assumed to be present in the CopBET/LSDdata folder. Please follow the dedicated script `CopBET/LSDdata/LSDdata_roi.m` to extract ROI-information for each of the atlases in the `CopBET_Atlases` folder after downloading the full data set.
 
 ## Atlases
 
