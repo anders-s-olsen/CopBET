@@ -135,7 +135,7 @@ tbl = CopBET_DCC_entropy(tbl,true,'keepdata',true,'parallel',true);
 % atlas edge/roi-to-roi connection (i.e., 268*267/2 unique values)
 
 % unwrap roi-to-roi DCC edges to network-to-network
-Shen218 = niftiread('Atlases/Shen268_2mm.nii');
+Shen268 = niftiread('Atlases/Shen268_2mm.nii');
 Shen268labels = readtable('Atlases/shen_268_parcellation_networklabels_1.csv');
 
 atlasnames = {'Medial_frontal','Frontoparietal','Deafult_mode','Subcortical_cerebellum',...
@@ -143,8 +143,8 @@ atlasnames = {'Medial_frontal','Frontoparietal','Deafult_mode','Subcortical_cere
 
 for network1 = 1:8
     for network2 = 1:8
-        network_idx1 = find(Shen218labels==network1);
-        network_idx2 = find(Shen218labels==network2);
+        network_idx1 = find(Shen268labels.Network==network1);
+        network_idx2 = find(Shen268labels.Network==network2);
         entropy = nan(height(tbl),1);
         for ses = 1:height(tbl)
             tmp = tbl.entropy{ses}(network_idx1,network_idx2);
