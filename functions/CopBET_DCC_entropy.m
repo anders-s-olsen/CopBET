@@ -67,11 +67,11 @@ parfor(ses = 1:height(in),numworkers)
     else
     Ct2 = DCC(ts-mean(ts));
     end
-    [var,entropy{ses}] = Barrett_analysis_no_correction(Ct2);
+    [var{ses},entropy{ses}] = Barrett_analysis_no_correction(Ct2);
     
 end
 out.entropy = entropy';
-
+out.var = var;
 end
 
 function [variance_out,entropy_out] = Barrett_analysis_no_correction(Ct2)
