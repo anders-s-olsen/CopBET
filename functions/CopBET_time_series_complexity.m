@@ -47,6 +47,12 @@
 function out = CopBET_time_series_complexity(in,LZtype,varargin)
 [out,~,in] = CopBET_function_init(in,varargin);
 
+if ~any(strcmp(LZtype,'LZ78temporal')|strcmp(LZtype,'LZ78spatial')|...
+        strcmp(LZtype,'LZ76temporal')|strcmp(LZtype,'LZ76spatial'))
+    error(['Please specify which type of time-series complexity measure to use.',...
+        'Possible inputs are ''LZ78temporal'', ''LZ78spatial'', ''LZ76temporal'', ''LZ76spatial'''])
+end
+
 %load data
 entropy = nan(height(in),1);
 disp('Beginning entropy calculations')
