@@ -19,8 +19,6 @@
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
 %   Defaults to true
-%   compute: whether to actually compute these values or retrieve those
-%   stored in memory from previous computations
 %   parallel: Whether to run temporal entropy in parallel (true)
 %
 %
