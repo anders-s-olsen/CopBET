@@ -1,4 +1,4 @@
-% out = CopBET_sample_entropy(in,keepdata,parallel)
+% out = CopBET_sample_entropy(in,atlas,compute,varargin)
 %
 % Copenhagen Brain Entropy Toolbox: Sample entropy
 % Evaluates sample entropy as in Lebedev et al., 2016. Sample entropy is
@@ -8,6 +8,8 @@
 %   in: char with the path to the input, denoised voxel-wise time series or
 %   a table where the first column contains
 %   chars (in cells), e.g., different subjects or scan sessions.
+%   atlas: atlas matrix of values
+%   compute: something, currently required to be true
 % name-value pairs:
 %   keepdata: Indicates whether the output table also should contain the
 %   input data, i.e., by adding an extra column containing entropy values.
@@ -96,7 +98,7 @@ for ses = 1:height(in)
     
     % calculate sample entropy for all voxels
     for a = 1:numel(scale)
-        MSE = nan(imgSize(1)*imgSize(2)*imgSize(3),1);
+        MSE = nan(length(brainVox),1);
         parfor (vox = 1:length(brainVox),numworkers)
             %         for vox = 1:length(brainVox)
             [row,col,sl] = ind2sub(imgSize,brainVox(vox));
@@ -115,7 +117,7 @@ for ses = 1:height(in)
         
         for roi = 1:num_rois
             tmp = MSE2(atlas==roi);
-            entropy{ses}(scale,roi) = mean(tmp(tmp~=0));
+            entropy{ses}(a,roi) = mean(tmp(tmp~=0));
         end
         
     end
