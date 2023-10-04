@@ -71,7 +71,7 @@ parfor(ses = 1:height(in),numworkers)
     
 end
 out.entropy = entropy';
-out.var = var;
+out.var = var';
 end
 
 function [variance_out,entropy_out] = Barrett_analysis_no_correction(Ct2)
