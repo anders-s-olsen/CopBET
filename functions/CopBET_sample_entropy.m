@@ -82,7 +82,7 @@ for ses = 1:height(in)
     path = in{ses,1}{1};
     image_4D = double(niftiread(path)); %4D series
     if NRUspecific
-        if ~isempty(regexp(path,'mr001'))
+        if ~isempty(regexp(path,'denoisedn'))
             image_4D = NRUspecific_downsamplemr001data(image_4D);
         end
     end

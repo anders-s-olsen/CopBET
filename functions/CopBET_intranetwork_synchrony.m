@@ -65,10 +65,11 @@ parfor (ses = 1:height(in),numworkers)
     path = in{ses,1}{1};
     
     data_denoised = niftiread(path); %4D series
+    data_denoised = data_denoised - mean(data_denoised,4);
     
     if NRUspecific
-        if ~cellfun(@isempty,regexp(path,'mr001'))
-            data_denoised=NRUspecific_downsample_mr001data(data_denoised);
+        if ~isempty(regexp(path,'denoisedn'))
+            data_denoised=NRUspecific_downsamplemr001data(data_denoised);
         end
     end
     datasz = size(data_denoised);
