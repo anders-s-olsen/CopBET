@@ -46,9 +46,21 @@
 
 function out = CopBET_metastate_series_complexity(in,varargin)
 
+% option to repeat k-means use the partition with the highest adjusted
+% mututal information with all other partitions. Default = false.
+ami = false; 
+
+namevalue = name_value_pairs(varargin{1});
+for args = 1:size(namevalue,1)
+    if strcmpi(namevalue(args),'ami')
+        ami = namevalue{args,2};
+    end
+end
+
+
 [out,numworkers,in] = CopBET_function_init(in,varargin);
 
-% Do LEiDA and concatenate data for clustering
+% Do concatenate data for clustering
 disp('Concatenating data')
 datasizes = nan(height(in),1);
 for ses = 1:height(in)
@@ -78,18 +90,54 @@ out.entropy = entropy;
 end
 
 %% functions
-function entropy = run_singleton_clustering(datasizes,ts_all,numworkers)
+function entropy = run_singleton_clustering(datasizes,ts_all,numworkers,ami)
 nreps = 200; % how many times to repeat clustering. will choose lowest error solution
 distanceMethod = 'correlation';
 maxI = 1000; % how many times you allow kmeans to try to converge
 
 numClusters = 4;
 if numworkers>0
-[partition,centroids] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
-    'Display','final','Options',statset('UseParallel',1));
+    if ami
+        N = 10;
+        for i=1:N
+            [parts(:,i),centroids_all(:,:,i)] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
+            'Display','final','Options',statset('UseParallel',1));
+        end
+        ami_results = NaN(N,N);
+        for i=1:N
+            for j=1:N
+                ami_results(i,j) = ami(parts(:,i),parts(:,j));
+            end
+        end
+        % assess mutual information between partitions and select the partition with highest AMI
+        [m,ind] = max(sum(ami_results,1)); %ind corresponds to the partition which has the highest mutual information with all other partitions
+        partition = parts(:,ind); % take partition that has most agreement with all other for further analysis
+        centroids = centroids_all(:,:,ind);
+    else
+        [partition,centroids] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
+        'Display','final','Options',statset('UseParallel',1));
+    end
 else
-    [partition,centroids] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
-    'Display','final');
+    if ami
+        N = 10;
+        for i=1:N
+            [parts(:,i),centroids_all(:,:,i)] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
+            'Display','final');
+        end
+        ami_results = NaN(N,N);
+        for i=1:N
+            for j=1:N
+                ami_results(i,j) = ami(parts(:,i),parts(:,j));
+            end
+        end
+        % assess mutual information between partitions and select the partition with highest AMI
+        [m,ind] = max(sum(ami_results,1)); %ind corresponds to the partition which has the highest mutual information with all other partitions
+        partition = parts(:,ind); % take partition that has most agreement with all other for further analysis
+        centroids = centroids_all(:,:,ind);
+    else
+        [partition,centroids] = kmeans(ts_all,numClusters,'Distance',distanceMethod,'Replicates',nreps,'MaxIter',maxI,...
+        'Display','final');
+    end
 end
 
 % group states
