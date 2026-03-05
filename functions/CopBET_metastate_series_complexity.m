@@ -47,8 +47,10 @@
 function out = CopBET_metastate_series_complexity(in,varargin)
 
 [out,numworkers,in] = CopBET_function_init(in,varargin);
-
-% Do LEiDA and concatenate data for clustering
+if height(in)==1
+    error('Error, datasets should be concatenated across subjects/sessions, i.e., more than one input matrix should be supplied')
+end
+% Concatenate data for clustering
 disp('Concatenating data')
 datasizes = nan(height(in),1);
 for ses = 1:height(in)
