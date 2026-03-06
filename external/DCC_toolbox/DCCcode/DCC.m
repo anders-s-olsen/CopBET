@@ -85,6 +85,7 @@ function C = DCC(Dat, varargin)
 
 dowhiten = 0;
 doresid = 0;
+iter=1000;
 
 % optional inputs with default values
 for i = 1:length(varargin)
@@ -96,6 +97,10 @@ for i = 1:length(varargin)
             case {'resid', 'residualize', 'X', 'model'}
                 doresid = 1; 
                 X = varargin{i + 1}; varargin{i + 1} = [];
+
+            case 'iter' % handle new iter arg
+                iter = varargin{i + 1}; % assign input value
+                varargin{i + 1} = []; % clear the next slot
                 
             otherwise, warning(['Unknown input string option:' varargin{i}]);
         end
@@ -168,7 +173,7 @@ fprintf('Running %d pairs: Estimated complete in %s, %05d', n, display_string, i
 for j=1:(p-1)  
     for k=(j+1):p
   
-        [ Ctmat ] = DCCsimple([Dat(:,j) Dat(:,k)]); 
+        [ Ctmat ] = DCCsimple([Dat(:,j) Dat(:,k)], iter); 
         C(j,k,:) = Ctmat(1,2,:); 
         C(k,j,:) = Ctmat(1,2,:); 
 
