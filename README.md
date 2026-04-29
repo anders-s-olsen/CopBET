@@ -10,7 +10,7 @@
 
 *As of April 2026 there is now a python implementation for this toolbox, see the copbet_py folder. DCC is not implemented in python.*
 
-The Copenhagen Brain Entropy Toolbox is a MATLAB toolbox that provides a collection of functions for evaluating 12 different entropy metrics described in the paper [Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy" by Drummond McCulloch, Anders S Olsen et al (MedRxiv)](https://www.medrxiv.org/content/10.1101/2023.07.03.23292164v1). This toolbox allows researchers to analyze and quantify the entropy of fMRI-recorded brain activity using various methods. 
+The Copenhagen Brain Entropy Toolbox is a MATLAB toolbox that provides a collection of functions for evaluating 12 different entropy metrics described in the paper [Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy" by Drummond McCulloch, Anders S Olsen et al (MedRxiv)](https://www.medrxiv.org/content/10.1101/2023.07.03.23292164v3). This toolbox allows researchers to analyze and quantify the entropy of fMRI-recorded brain activity using various methods. 
 
 ## Installation
 
