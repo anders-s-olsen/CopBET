@@ -10,7 +10,7 @@
 
 ## Python implementation
 
-As of April 2026, a Python translation of CopBET is available in the `copbet_py/` folder of this repository (contributed by Drummond McCulloch). It implements 12 of the 13 entropy/complexity measures — **DCC entropy is not yet implemented in Python**. All functions accept a list of `(T × N)` NumPy arrays (one per session) and return entropy values as NumPy arrays.
+As of April 2026, a Python translation of CopBET is available in the `copbet_py/` folder of this repository. It implements 12 of the 13 entropy/complexity measures — **DCC entropy is not yet implemented in Python**. All functions accept a list of `(T × N)` NumPy arrays (one per session) and return entropy values as NumPy arrays.
 
 See [`copbet_py/README.md`](copbet_py/README.md) for installation instructions, usage examples, and a full comparison with the MATLAB implementation.
 
