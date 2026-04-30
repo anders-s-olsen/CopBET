@@ -98,10 +98,6 @@ If you use the Copenhagen Brain Entropy Toolbox in your research, please cite th
 
 Drummond McCulloch, Anders S Olsen, et al. "Navigating the chaos of psychedelic neuroimaging: A multi-metric evaluation of acute psilocybin effects on brain entropy". (MedRxiv), 2023.
 
-## Repo Version
-
-1.0.0 June 21st 2023 - Initial commit
-
 ## License
 
 Copyright (C) 2023  Drummond E-Wen McCulloch & Anders Stevnhoved Olsen
