@@ -90,7 +90,7 @@ The toolbox has been tested on MATLAB R2018b. It doesn't work on R2017b due to t
 
 ## Contributing
 
-Please email Anders S. Olsen (ansol@dtu.dk) if you would like to contribute to the toolbox or otherwise have comments and questions to the code not answered in the paper. 
+Please email Anders S. Olsen (anders.stevnhoved.olsen@gmail.com) if you would like to contribute to the toolbox or otherwise have comments and questions to the code not answered in the paper. 
 
 ## References
 
