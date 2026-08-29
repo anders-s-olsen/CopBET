@@ -1,4 +1,4 @@
-function [parameters, loglikelihood, Ht, Qt,  stdresid, likelihoods, stderrors, A,B, jointscores]=dcc_mvgarch(data,dccP,dccQ,archP,garchQ)
+function [parameters, loglikelihood, Ht, Qt,  stdresid, likelihoods, stderrors, A,B, jointscores]=dcc_mvgarch(data,dccP,dccQ,archP,garchQ,iter)
 % PURPOSE:
 %        Estimates a multivariate GARCH model using the DCC estimator of Engle and Sheppard
 % 
@@ -73,12 +73,16 @@ elseif length(garchQ)==1
     garchQ=ones(1,k)*garchQ;
 end
 
+if isempty(iter)
+    iter=1000;
+end
+
 
 % Now lest do the univariate garching using fattailed_garch as it's faster then garchpq
 stdresid=data;
 options=optimset('fmincon');
-options=optimset(options,'Display','off','Diagnostics','off','MaxFunEvals',1000*max(archP+garchQ+1),'MaxIter',1000*max(archP+garchQ+1),'LargeScale','off','MaxSQPIter',1000);
-options  =  optimset(options , 'MaxSQPIter' , 1000);
+options=optimset(options,'Display','off','Diagnostics','off','MaxFunEvals',iter*max(archP+garchQ+1),'MaxIter',iter*max(archP+garchQ+1),'LargeScale','off','MaxSQPIter',iter);
+options  =  optimset(options , 'MaxSQPIter' , iter);
 for i=1:k
     if doverbose, fprintf(1,'Estimating GARCH model for Series %d\n',i); end
     [univariate{i}.parameters, univariate{i}.likelihood, univariate{i}.stderrors, univariate{i}.robustSE, univariate{i}.ht, univariate{i}.scores] ... 
